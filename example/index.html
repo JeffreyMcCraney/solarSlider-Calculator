@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>rangeslider.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dist/rangeslider.css">
+    <style>
+        *,
+        *:before,
+        *:after {
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+        }
+
+        html {
+            color: #404040;
+            font-family: Helvetica, arial, sans-serif;
+        }
+        body {
+            padding: 50px 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        output {
+            display: block;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .u-left {
+            float: left;
+        }
+
+        .u-cf:before,
+        .u-cf:after {
+            content: "";
+            display: table;
+        }
+        .u-cf:after {
+            clear: both;
+        }
+
+        .u-text-left {
+            text-align: left;
+        }
+    </style>
+    <!--[if lt IE 9]>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!--Select your state -->
+    <div>
+        <select id="stateSelect">
+            <option value="1">AZ</option>
+            <option value="2">CA</option>
+            <option value="3">CT</option>
+            <option value="4">DC</option>
+            <option value="5">HI</option>
+            <option value="6">MA</option>
+            <option value="7">MD</option>
+            <option value="8">NJ</option>
+            <option value="9">NM</option>
+            <option value="10">NV</option>
+            <option value="11">NY</option>
+            <option value="12">PA</option>
+            <option value="13">SC</option>
+        </select>
+    </div>
+
+    <!-- Based on State Selection, pick your power -->
+    <div id="powerSelect">
+
+    </div>
+    
+    <div>
+        <h2>What's your average monthly electric bill?</h2>
+        <input type="range" min="0" max="500" data-rangeslider>
+        <br>
+        <br>
+        <output id="averageBill"></output>
+    </div>
+
+    <div>
+        <!--Result * 2 -->
+        <div id="savings">           
+        </div>
+
+    </div>
+
+    
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../dist/rangeslider.js"></script>
+    <script>
+    $(function() {
+
+        var $document = $(document);
+        var selector = '[data-rangeslider]';
+        var $element = $(selector);
+
+        // For ie8 support
+        var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
+
+        // Example functionality to demonstrate a value feedback
+        function valueOutput(element) {
+            var value = element.value;
+            var output = element.parentNode.getElementsByTagName('output')[0] || element.parentNode.parentNode.getElementsByTagName('output')[0];
+            output[textContent] = value;
+        }
+
+        $document.on('input', 'input[type="range"], ' + selector, function(e) {
+            valueOutput(e.target);
+        });
+
+        /* Change power Options based on State Select */
+        $('#stateSelect').change(function(){
+            if($(this).val() == '1'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>Arizona Public Service</option><option value='2'>Electrical District #3</option></select>");
+            }
+            else if($(this).val() == '2'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>San Diego Gas & Electric</option><option value='2'>Imperial Irrigation District</option><option value='3'>LA Dept. of Water & Power</option><option value='4'>Lodi Electric</option><option value='5'>Edison</option><option value='6'>Modesto</option><option value='7'>Redding Electric Utility</option><option value='8'>Sacramento Municipal Utility District</option></select>");
+            }
+            else if($(this).val() == '3'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>United Illuminating</option><option value='2'>Eversource (CL& P)</option></select>");
+            }
+            else if($(this).val() == '4'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>Pepco DC</option></select>");
+            }
+            else if($(this).val() == '5'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>Hawaii Electric</option><option value='2'>Maui Electric Light</option><option value='3'>Hawaiian Electric</select>");
+            }
+            else if($(this).val() == '6'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>Eversoure (WMECO)</option><option value='2'>Unitil</option><option value='3'>Eversource (NSTAR)</option><option value='4'>National Grid MA</option></select>");
+            }
+            else if($(this).val() == '7'){
+                $('#powerSelect').html(
+                    "<select><option value='1'>Arizona Public Service</option><option value='2'>Electrical District #3</option></select>");
+            }
+            else if($(this).val() == '8'){
+                console.log("NY");
+            }
+            else if($(this).val() == '9'){
+                console.log("NY");
+            }
+            else if($(this).val() == '10'){
+                console.log("NY");
+            }
+            else if($(this).val() == '11'){
+                console.log("NY");
+            }
+            else if($(this).val() == '12'){
+                console.log("NY");
+            }
+            else if($(this).val() == '13'){
+                console.log("NY");
+            }
+        });
+        
+
+        // Basic rangeslider initialization
+        $element.rangeslider({
+
+            // Deactivate the feature detection
+            polyfill: false,
+
+            // Callback function
+            onInit: function() {
+                valueOutput(this.$element[0]);
+            },
+
+            // Callback function
+            onSlide: function(position, value) {
+                console.log('onSlide');
+                console.log('position: ' + position, 'value: ' + value);
+
+                //my Work
+                var savings = value * 2;
+                console.log ("savings:" + savings);
+                $('#savings').html(savings);
+            },
+
+            // Callback function
+            onSlideEnd: function(position, value) {
+                console.log('onSlideEnd');
+                console.log('position: ' + position, 'value: ' + value);
+            }
+        });
+
+    });
+    </script>
+</body>
+</html>
