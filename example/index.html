@@ -59,6 +59,7 @@
     <!--Select your state -->
     <div>
         <select id="stateSelect">
+            <option value="0">State</option>
             <option value="1">AZ</option>
             <option value="2">CA</option>
             <option value="3">CT</option>
@@ -72,12 +73,15 @@
             <option value="11">NY</option>
             <option value="12">PA</option>
             <option value="13">SC</option>
+            <option value="14">UT</option>
         </select>
     </div>
 
     <!-- Based on State Selection, pick your power -->
     <div id="powerSelect">
-
+        <select id="powerCompany">
+            <option value="0">Power Company</option>
+        </select>
     </div>
     
     <div>
@@ -89,7 +93,7 @@
     </div>
 
     <div>
-        <!--Result * 2 -->
+        <!--Results -->
         <div id="savings">           
         </div>
 
@@ -105,6 +109,7 @@
         var $document = $(document);
         var selector = '[data-rangeslider]';
         var $element = $(selector);
+        var powerSavings;
 
         // For ie8 support
         var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
@@ -120,54 +125,294 @@
             valueOutput(e.target);
         });
 
+        /*Function for replacing select option values */
+        (function($, window) {
+          $.fn.replaceOptions = function(options) {
+            var self, $option;
+
+            this.empty();
+            self = this;
+
+            $.each(options, function(index, option) {
+              $option = $("<option></option>")
+                .attr("value", option.value)
+                .text(option.text);
+              self.append($option);
+            });
+          };
+        })(jQuery, window);
+
+
         /* Change power Options based on State Select */
         $('#stateSelect').change(function(){
+            //Arizona
             if($(this).val() == '1'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>Arizona Public Service</option><option value='2'>Electrical District #3</option></select>");
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Arizona Public Service", value: 1},
+                  {text: "Elecrtircal District #3", value: 2}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //California
+            else if($(this).val() == '2'){ 
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "San Diego Gas & Electric", value: 3},
+                  {text: "Imperial Irrigation District", value: 4},
+                  {text: "PG&E", value: 5},
+                  {text: "LA Dept. of Water & Power", value: 6},
+                  {text: "Lodi Electric", value: 7},
+                  {text: "Edison", value: 8},
+                  {text: "Modesto", value: 9},
+                  {text: "Redding Electric Utility", value: 10},
+                  {text: "Sacramento Municipal Utility District", value: 11}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Connecticut
+            else if($(this).val() == '3'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "United Illuminating", value: 12},
+                  {text: "Eversource (CL & P", value: 13}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //DC
+            else if($(this).val() == '4'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Pepco DC", value: 14}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Hawaii
+            else if($(this).val() == '5'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Hawaii Electric", value: 15},
+                  {text: "Maui Electric Light", value: 16},
+                  {text: "Hawaiian Electric", value: 17},
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Massachussetts
+            else if($(this).val() == '6'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Eversource (WMECO)", value: 18},
+                  {text: "Unitil", value: 19},
+                  {text: "Eversource (NSTAR)", value: 20},
+                  {text: "national Grid MA", value: 21}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Maryland
+            //PECO MD???
+            else if($(this).val() == '7'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Delmarva Power", value: 22},
+                  {text: "PEPCO", value: 23},
+                  {text: "BG&E", value: 24},
+                  {text: "SMECO", value: 25}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //New Jersey
+            else if($(this).val() == '8'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "ACE", value: 26},
+                  {text: "JCP&L", value: 27},
+                  {text: "PSG&E", value: 28},
+                  {text: "Orange and Rockland", value: 29}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //New Mexico
+            else if($(this).val() == '9'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "PNM", value: 30}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Nevada
+            else if($(this).val() == '10'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "NV Energy", value: 31}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //New York
+            else if($(this).val() == '11'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Consolidated Edison", value: 32},
+                  {text: "Central Hudson", value: 33},
+                  {text: "PSE&GLI", value: 34},
+                  {text: "NYSEG", value: 35},
+                  {text: "National Grid NY", value: 36}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Pennsylvania
+            else if($(this).val() == '12'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "PECOPA", value: 37},
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //South Carolina
+            else if($(this).val() == '13'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Duke ENergy Carolinas", value: 38},
+                  {text: "SCE&G", value: 39}
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+            //Utah
+            else if($(this).val() == '14'){
+                var options = [
+                  {text: "Power Company", value: 0},
+                  {text: "Rocky Mountain Power", value: 40},
+                ];
+                $("#powerCompany").replaceOptions(options);
+            }
+
+            console.log("State Changed");
+        });
+
+        /*Determine % Savings Based off Power Compnay */
+        $('#powerCompany').change(function(){
+            if($(this).val() == '1'){
+                powerSavings = .25;
             }
             else if($(this).val() == '2'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>San Diego Gas & Electric</option><option value='2'>Imperial Irrigation District</option><option value='3'>LA Dept. of Water & Power</option><option value='4'>Lodi Electric</option><option value='5'>Edison</option><option value='6'>Modesto</option><option value='7'>Redding Electric Utility</option><option value='8'>Sacramento Municipal Utility District</option></select>");
+                powerSavings = .20;
             }
             else if($(this).val() == '3'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>United Illuminating</option><option value='2'>Eversource (CL& P)</option></select>");
+                powerSavings = .48;
             }
             else if($(this).val() == '4'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>Pepco DC</option></select>");
+                powerSavings = .33;
             }
             else if($(this).val() == '5'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>Hawaii Electric</option><option value='2'>Maui Electric Light</option><option value='3'>Hawaiian Electric</select>");
+                powerSavings = .32;
             }
             else if($(this).val() == '6'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>Eversoure (WMECO)</option><option value='2'>Unitil</option><option value='3'>Eversource (NSTAR)</option><option value='4'>National Grid MA</option></select>");
+                powerSavings = .25;
             }
             else if($(this).val() == '7'){
-                $('#powerSelect').html(
-                    "<select><option value='1'>Arizona Public Service</option><option value='2'>Electrical District #3</option></select>");
+                powerSavings = .20;
             }
             else if($(this).val() == '8'){
-                console.log("NY");
+                powerSavings = .17;
             }
             else if($(this).val() == '9'){
-                console.log("NY");
+                powerSavings = .13;
             }
             else if($(this).val() == '10'){
-                console.log("NY");
+                powerSavings = .13;
             }
             else if($(this).val() == '11'){
-                console.log("NY");
+                powerSavings = -.09;
             }
             else if($(this).val() == '12'){
-                console.log("NY");
+                powerSavings = .44;
             }
             else if($(this).val() == '13'){
-                console.log("NY");
+                powerSavings = .21;
             }
+            else if($(this).val() == '14'){
+                powerSavings = .21;
+            }
+            else if($(this).val() == '15'){
+                powerSavings = .55;
+            }
+            else if($(this).val() == '16'){
+                powerSavings = .49;
+            }
+            else if($(this).val() == '17'){
+                powerSavings = .43;
+            }
+            else if($(this).val() == '18'){
+                powerSavings = .50;
+            }
+            else if($(this).val() == '19'){
+                powerSavings = .49;
+            }
+            else if($(this).val() == '20'){
+                powerSavings = .37;
+            }
+            else if($(this).val() == '21'){
+                powerSavings = .34;
+            }
+            else if($(this).val() == '22'){
+                powerSavings = .24;
+            }
+            else if($(this).val() == '23'){
+                powerSavings = .21;
+            }
+            else if($(this).val() == '24'){
+                powerSavings = .17;
+            }
+            else if($(this).val() == '25'){
+                powerSavings = .13;
+            }
+            else if($(this).val() == '26'){
+                powerSavings = .27;
+            }
+            else if($(this).val() == '27'){
+                powerSavings = .24;
+            }
+            else if($(this).val() == '28'){
+                powerSavings = .22;
+            }
+            else if($(this).val() == '29'){
+                powerSavings = .16;
+            }
+            else if($(this).val() == '30'){
+                powerSavings = .06;
+            }
+            else if($(this).val() == '31'){
+                powerSavings = .16;
+            }
+            else if($(this).val() == '32'){
+                powerSavings = .30;
+            }
+            else if($(this).val() == '33'){
+                powerSavings = .24;
+            }
+            else if($(this).val() == '34'){
+                powerSavings = .19;
+            }
+            else if($(this).val() == '35'){
+                powerSavings = .10;
+            }
+            else if($(this).val() == '36'){
+                powerSavings = .07;
+            }
+            else if($(this).val() == '37'){
+                powerSavings = .14;
+            }
+            else if($(this).val() == '38'){
+                powerSavings = .29;
+            }
+            else if($(this).val() == '39'){
+                powerSavings = .20;
+            }
+            else if($(this).val() == '40'){
+                powerSavings = .10;
+            }
+
+            console.log(powerSavings);
+            console.log($(this).val());
         });
         
 
@@ -188,7 +433,8 @@
                 console.log('position: ' + position, 'value: ' + value);
 
                 //my Work
-                var savings = value * 2;
+                var TwentyYear = value * 12 * 20;
+                var savings = TwentyYear - (TwentyYear * powerSavings);
                 console.log ("savings:" + savings);
                 $('#savings').html(savings);
             },
